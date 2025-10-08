@@ -28,20 +28,20 @@ val SpaceXXXXL = 56.dp
 
 // Icon sizes
 val IconSizeXXS = 12.dp
-val IconSizeXS = 16.dp
+val IconSizeXS = 18.dp
 val IconSizeS = 22.dp
 val IconSizeM = 23.dp
 val IconSizeL = 24.dp
 val IconSizeXL = 44.dp
-val IconSizeXXL = 48.dp
+val IconSizeXXL = 34.dp
 
 //Font sizes
 val FontSizeXS = 10.sp
 val FontSizeS = 12.sp
 val FontSizeM = 14.sp
 val FontSizeL = 16.sp
-val FontSizeXL = 20.sp
-val FontSizeXXL = 22.sp
-val FontSizeXXXL = 26.sp
-val FontSizeXXXXL = 34.sp
+val FontSizeXL = 18.sp
+val FontSizeXXL = 20.sp
+val FontSizeXXXL = 24.sp
+val FontSizeXXXXL = 26.sp
 val FontSizeXXXXXL = 40.sp

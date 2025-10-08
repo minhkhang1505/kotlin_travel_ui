@@ -1,7 +1,5 @@
 package com.nguyenminhkhang.travelui.home.components
 
-import android.R.attr.shape
-import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -14,7 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -23,12 +21,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -37,33 +33,62 @@ import androidx.compose.ui.unit.dp
 import com.nguyenminhkhang.travelui.R
 import com.nguyenminhkhang.travelui.ui.theme.FontSizeL
 import com.nguyenminhkhang.travelui.ui.theme.FontSizeM
-import com.nguyenminhkhang.travelui.ui.theme.FontSizeS
 import com.nguyenminhkhang.travelui.ui.theme.IconSizeXL
 import com.nguyenminhkhang.travelui.ui.theme.IconSizeXS
-import com.nguyenminhkhang.travelui.ui.theme.IconSizeXXS
-import com.nguyenminhkhang.travelui.ui.theme.RadiusSmall
-import com.nguyenminhkhang.travelui.ui.theme.RadiusXL
 import com.nguyenminhkhang.travelui.ui.theme.RadiusXXXL
 import com.nguyenminhkhang.travelui.ui.theme.SpaceL
 import com.nguyenminhkhang.travelui.ui.theme.SpaceM
 import com.nguyenminhkhang.travelui.ui.theme.SpaceS
 import com.nguyenminhkhang.travelui.ui.theme.SpaceXL
-import com.nguyenminhkhang.travelui.ui.theme.SpaceXS
 import com.nguyenminhkhang.travelui.ui.theme.SpaceXXS
-import com.nguyenminhkhang.travelui.ui.theme.SpaceXXXS
 
 data class PlaceCardUiState(
     val imageUrl: String,
     val placeName: String,
     val cityName: String,
     val countryName: String,
-    val price: String,
     val rating: Float,
+)
+
+private val samplePlaceCardList = listOf(
+    PlaceCardUiState(
+        imageUrl = "",
+        placeName = "Mount Fuji",
+        cityName = "Tokyo",
+        countryName = "Japan",
+        rating = 4.8f
+    ),
+    PlaceCardUiState(
+        imageUrl = "",
+        placeName = "Eiffel Tower",
+        cityName = "Paris",
+        countryName = "France",
+        rating = 4.7f
+    ),
+    PlaceCardUiState(
+        imageUrl = "",
+        placeName = "Great Wall",
+        cityName = "Beijing",
+        countryName = "China",
+        rating = 4.9f
+    ),
 )
 
 @Composable
 fun PlaceCardList() {
-
+    Box(
+        modifier = Modifier.fillMaxSize().background(Color.White).padding(SpaceM, SpaceM, 0.dp, SpaceM)
+    ) {
+        LazyRow {
+            items(samplePlaceCardList.size) {index ->
+                PlaceCardItem(
+                    modifier = Modifier
+                    .size(width = 270.dp, height = 405.dp)
+                    .padding(end = SpaceL),
+                uiState = samplePlaceCardList[index])
+            }
+        }
+    }
 }
 
 @Composable
@@ -88,7 +113,7 @@ fun PlaceCardItem( modifier: Modifier, uiState: PlaceCardUiState) {
             modifier = Modifier.fillMaxWidth().padding(SpaceM),
             contentAlignment = Alignment.TopEnd
         ) {
-            HeartIcon(Modifier.size(IconSizeXL))
+            CircleIconButton(Modifier.size(IconSizeXL), painter = painterResource(R.drawable.ic_heart), contentDescription = "Heart Icon")
         }
         Box(
             modifier = Modifier.fillMaxSize().padding(bottom = SpaceXL),
@@ -104,14 +129,14 @@ fun PlaceCardItem( modifier: Modifier, uiState: PlaceCardUiState) {
 }
 
 @Composable
-fun HeartIcon(modifier: Modifier) {
+fun CircleIconButton(modifier: Modifier, painter: Painter, contentDescription: String) {
     Box(
         modifier.background(Color(0xFF1D1D1D).copy(alpha = 0.6f), shape = CircleShape),
         contentAlignment = Alignment.Center
     ) {
         Icon(
-            painter = painterResource(R.drawable.ic_heart),
-            contentDescription = "Heart Icon",
+            painter = painter,
+            contentDescription = contentDescription,
             tint = Color.White,
         )
     }
@@ -183,20 +208,4 @@ fun PlaceTag(modifier : Modifier, uiState: PlaceCardUiState) {
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun PlaceCardItemPreview() {
-    PlaceCardItem(
-        modifier = Modifier.width(270.dp).height(405.dp),
-        uiState = PlaceCardUiState(
-            imageUrl = "",
-            placeName = "Mount Fuji",
-            cityName = "Tokyo",
-            countryName = "Japan",
-            price = "$100",
-            rating = 4.8f
-        )
-    )
 }
