@@ -33,6 +33,9 @@ import androidx.compose.ui.unit.dp
 import com.nguyenminhkhang.travelui.R
 import com.nguyenminhkhang.travelui.ui.theme.FontSizeL
 import com.nguyenminhkhang.travelui.ui.theme.FontSizeM
+import com.nguyenminhkhang.travelui.ui.theme.FontSizeXL
+import com.nguyenminhkhang.travelui.ui.theme.FontSizeXXL
+import com.nguyenminhkhang.travelui.ui.theme.FontSizeXXXL
 import com.nguyenminhkhang.travelui.ui.theme.IconSizeXL
 import com.nguyenminhkhang.travelui.ui.theme.IconSizeXS
 import com.nguyenminhkhang.travelui.ui.theme.RadiusXXXL
@@ -49,6 +52,8 @@ data class PlaceCardUiState(
     val countryName: String,
     val rating: Float,
 )
+
+private val placeDescription: String = "This vast mountain range is renowned for its remarkable diversity in terms of topography and climate. It features towering peaks, active volcanoes, deep canyons, expansive plateaus, and lush valleys. The Andes are also home to "
 
 private val samplePlaceCardList = listOf(
     PlaceCardUiState(
@@ -207,5 +212,82 @@ fun PlaceTag(modifier : Modifier, uiState: PlaceCardUiState) {
                 )
             }
         }
+    }
+}
+
+@Composable
+fun PlaceDetailScreen(modifier: Modifier, uiState: PlaceCardDetailUiState) {
+    Column(
+        modifier = modifier.fillMaxSize()
+    ) {
+        Box(
+            modifier = Modifier.width(374.dp).height(460.dp)
+                .clip(
+                    shape = RoundedCornerShape(RadiusXXXL)
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(R.drawable.image_1),
+                contentDescription = uiState.placeName,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(
+                        shape = RoundedCornerShape(RadiusXXXL)
+                    )
+            )
+            Box(
+                modifier = Modifier.fillMaxSize().padding(top = SpaceM),
+                contentAlignment = Alignment.TopCenter
+            ) {
+                TopBarSection(modifier = Modifier.fillMaxWidth().padding(horizontal = SpaceM))
+            }
+            Box(
+                modifier = Modifier.fillMaxSize().padding(bottom = SpaceXL),
+                contentAlignment = Alignment.BottomCenter
+            ) {
+                ImageHeaderSection(
+                    modifier = Modifier
+                        .width(331.dp).height(104.dp)
+                        .padding(horizontal = SpaceM),
+                    uiState = uiState
+                )
+            }
+        }
+        Spacer(modifier = Modifier.height(SpaceL))
+        Row(
+            verticalAlignment = Alignment.Bottom
+        ) {
+            Text(
+                text = "Overview",
+                style = MaterialTheme.typography.titleMedium.copy(
+                    fontFamily = FontFamily(Font(R.font.inter_semibold)),
+                    fontSize = FontSizeXXXL
+                )
+            )
+            Spacer(modifier = Modifier.width(SpaceL))
+            Text(
+                text = "Details",
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    fontFamily = FontFamily(Font(R.font.roboto)),
+                    color = Color(0xFF1B1B1B),
+                    fontSize = FontSizeL
+                )
+            )
+        }
+        Spacer(modifier = Modifier.height(SpaceL))
+        InfoRow(modifier = Modifier.fillMaxWidth())
+        Spacer(modifier = Modifier.height(SpaceL))
+        Text(
+            text = placeDescription,
+            style = MaterialTheme.typography.bodyMedium.copy(
+                fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                color = Color(0xFFA5A5A5),
+                fontSize = FontSizeXL
+            ),
+        )
+        Spacer(modifier = Modifier.height(SpaceL))
+        IconButton(modifier = Modifier.width(373.dp).height(66.dp), title = "Book Now", painter = painterResource(R.drawable.ic_send), contentDescription = "Icon Send", onClick = {})
     }
 }

@@ -187,7 +187,7 @@ fun InfoRow(
     ) {
         InforItem(
             itemDes = "8 hour",
-            painter = painterResource(R.drawable.ic_clock),
+            painter = painterResource(R.drawable.ic_clock_bg_black),
             contentDescription = "Clock Icon"
         )
         InforItem(
