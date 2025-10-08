@@ -3,6 +3,7 @@ package com.nguyenminhkhang.travelui.home.components
 import android.view.RoundedCorner
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,20 +21,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.nguyenminhkhang.travelui.ui.theme.RadiusXS
 import com.nguyenminhkhang.travelui.ui.theme.SpaceM
 import com.nguyenminhkhang.travelui.R
+import com.nguyenminhkhang.travelui.ui.theme.SpaceL
 
 data class CategoryUiState(
     val title: String,
-    val isSelected: Boolean
+    val isSelected: Boolean,
 )
 
 @Composable
 fun CategoryTabs(modifier : Modifier, uiState: CategoryUiState) {
     Box(
-        modifier = modifier.background(Color.Black, shape = RoundedCornerShape(SpaceM)).padding(SpaceM)
+        modifier = modifier.background(if (uiState.isSelected) Color.Black else Color(0xFFFBFBFB), shape = RoundedCornerShape(SpaceL)).padding(SpaceL)
     ) {
         Text(
             text = uiState.title,
-            color = Color.White,
+            color = if (uiState.isSelected) Color.White else Color(0xFFC5C5C5),
             style = MaterialTheme.typography.labelLarge.copy(
                 fontFamily = FontFamily(Font(R.font.roboto_medium))
             ),
@@ -44,11 +46,20 @@ fun CategoryTabs(modifier : Modifier, uiState: CategoryUiState) {
 @Preview
 @Composable
 fun CategoryTabsPreview() {
-    CategoryTabs(
-        modifier = Modifier,
-        uiState = CategoryUiState(
-            title = "Most Viewed",
-            isSelected = true
+    Column() {
+        CategoryTabs(
+            modifier = Modifier,
+            uiState = CategoryUiState(
+                title = "Recommended",
+                isSelected = true
+            )
         )
-    )
+        CategoryTabs(
+            modifier = Modifier,
+            uiState = CategoryUiState(
+                title = "Popular",
+                isSelected = false
+            )
+        )
+    }
 }
